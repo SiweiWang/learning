@@ -1,0 +1,25 @@
+VAGRANTFILE_API_VERSION = "2"
+VAGRANT_DEFAULT_PROVIDER = "virtual_box"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    # packaged box with vagrant installed
+    config.vm.define "ansible" do |vagrant1|
+        vagrant1.vm.box = "file://box/ansible.box"
+        config.vm.network "private_network", ip: "192.168.33.10"
+        config.ssh.insert_key = false
+    end
+
+    # stock ubuntu servers
+    config.vm.define "vm1" do |vagrant1|
+        vagrant1.vm.box = "ubuntu/trusty64"
+        config.vm.network "private_network", ip: "192.168.33.11"
+    end
+    config.vm.define "vm2" do |vagrant1|
+        vagrant1.vm.box = "ubuntu/trusty64"
+        config.vm.network "private_network", ip: "192.168.33.12"
+    end
+    config.vm.define "vm3" do |vagrant1|
+        vagrant1.vm.box = "ubuntu/trusty64"
+        config.vm.network "private_network", ip: "192.168.33.13"
+    end
+end
