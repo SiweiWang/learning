@@ -1,6 +1,7 @@
 import unittest
-
 from sorted_set import SortedSet 
+from collections import (Sized, Container, Iterable, Sequence)
+
 
 class TestConstruction(unittest.TestCase):
 
@@ -34,7 +35,11 @@ class TestContainerProtocol(unittest.TestCase):
     def test_negative_contained(self):
         self.assertTrue(0 not in self.s)
 
+    def test_protocol(self):
+        isinstance(SortedSet, Container)
+
 class TestSizePotocol(unittest.TestCase):
+    
     def test_empty(self):
         s = SortedSet()
         self.assertEqual(len(s), 0)
@@ -52,6 +57,9 @@ class TestSizePotocol(unittest.TestCase):
         s = SortedSet([5,5,5])
         self.assertEqual(len(s), 1)
 
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Sized))
+
 class TestIteratorProtocol(unittest.TestCase):
     def setUp(self):
         self.s = SortedSet([6,7,3,9])
@@ -63,6 +71,9 @@ class TestIteratorProtocol(unittest.TestCase):
         self.assertEqual(next(i), 7)
         self.assertEqual(next(i), 9)
         self.assertRaises(StopIteration, lambda: next(i))
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Iterable))
 
 class TestSequenceProtocol(unittest.TestCase):
     
@@ -101,6 +112,40 @@ class TestSequenceProtocol(unittest.TestCase):
     def test_slice_full(self):
         self.assertTrue(self.s[:] == self.s)
 
+    def test_reverse(self):
+        s = SortedSet([1, 2, 3, 4])
+        r = reversed(s)
+        i = iter(r)
+
+        self.assertEqual(4, next(i))
+        self.assertEqual(3, next(i))
+        self.assertEqual(2, next(i))
+        self.assertEqual(1, next(i))
+
+        with self.assertRaises(StopIteration):
+            next(i)
+
+    def test_positive_index(self):
+        s = SortedSet([1, 2, 3, 4])
+        self.assertEqual(1, s.index(2))
+
+
+    def test_negative_index(self):
+        s = SortedSet([1, 2, 3, 4])
+        with self.assertRaises(ValueError):
+            s.index(14)
+        
+    def test_count_in(self):
+        s = SortedSet([1, 2, 3, 4])
+        self.assertEqual(1, s.count(1))
+
+    def test_count_not_in(self):
+        s = SortedSet([1, 2, 3, 4])
+        self.assertEqual(0, s.count(5))
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Sequence))
+
 class TestReprProtocol(unittest.TestCase):
     
     def test_repr_empty(self):
@@ -126,6 +171,8 @@ class TestInequlityProtocol(unittest.TestCase):
     def test_indentity(self):
         s = SortedSet([10 ,11, 12])
         self.assertFalse(s != s)
+
+
 
 if __name__ == '__main__':
     unittest.main()
