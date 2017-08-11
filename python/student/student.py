@@ -1,12 +1,11 @@
+"""Student class with inheritance"""
 students = []
 
-
 class Student:
-    school_name = "awesome high"
-
-    def __init__(self, name, student_id=332):
+    def __init__(self, name, student_id=332, school_name="default school"):
         self.name = name
         self.student_id = student_id
+        self.school_name = school_name
         students.append(self)
 
     def __str__(self):
