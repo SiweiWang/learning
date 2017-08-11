@@ -1,3 +1,13 @@
+
+# Vagrant box files
 /ansible/box/*
 ansible/.vagran*
-.idea
+
+# vs code local
+**/.vscode/*
+
+# .idea config
+.idea/**
+
+# remove python cache
+**/__pycache__/

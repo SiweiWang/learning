@@ -1,0 +1,30 @@
+""" demo for keyword arguments"""
+
+
+def test(name, **kwargs):
+    print(name)
+    print(kwargs)
+    print(type(kwargs))
+
+test("test", value="hi")
+
+
+def tag(name, **attributes):
+    result = '<' + name
+    for key, value in attributes.items():
+        result += ' {k} = {v}'.format(k=key, v=str(value))
+    result += '>'
+    return result
+
+print(tag('image', src="src=kitten.jpg", width="100px", align="center"))
+
+
+def print_args(arg1, arg2, *args, kwarg1, kwarg2, **kwargs):
+    print(arg1)
+    print(arg2)
+    print(args)
+    print(kwarg1)
+    print(kwarg2)
+    print (kwargs)
+
+print_args (1,2,3,4,5,6, kwarg1=7, kwarg2=8, test=9, test2=10)
